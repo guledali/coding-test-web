@@ -4,13 +4,6 @@ import { useEffect } from "react";
 
 // Add CSS styles
 const styles = {
-  main: {
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
   heading: {
     textAlign: "center",
   },
@@ -43,8 +36,16 @@ export default function Error({
   }, [error]);
 
   return (
-    <main style={styles.main}>
-      <h2 style={styles.heading}>Something went wrong!</h2>
+    <main
+      style={{
+        height: "100%",
+        display: "flex",
+        flexDirection: "column" as const,
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <h2 style={{ textAlign: "center" as const }}>Something went wrong!</h2>
       <button
         style={styles.button}
         onMouseOver={(e) => {
