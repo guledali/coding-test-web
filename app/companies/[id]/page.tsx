@@ -1,8 +1,8 @@
 import { Suspense } from "react";
+import { Metadata } from "next/types";
+import { notFound } from "next/navigation";
 import { getCompany } from "@/app/lib/data";
 import { DetailCompany } from "@/app/ui";
-import { notFound } from "next/navigation";
-import { Metadata } from "next/types";
 
 type Props = {
   params: Promise<{ id: string }>;
