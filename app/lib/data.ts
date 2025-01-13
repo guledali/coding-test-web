@@ -17,7 +17,6 @@ export async function getCompanies(): Promise<CompaniesResponse> {
     throw new Error(`Failed to fetch list companies: ${error}`);
   }
 }
-
 /**
  * Fetches a single company by ID
  * should throw an error if not
