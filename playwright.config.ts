@@ -44,7 +44,7 @@ export default defineConfig({
     // Base URL to use in actions like `await page.goto('/')`
     baseURL: baseUrl,
     trace: "on-first-retry",
-    headless: false,
+    headless: process.env.CI ? true : false,
   },
 
   projects: [
