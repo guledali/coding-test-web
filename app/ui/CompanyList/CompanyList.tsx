@@ -41,7 +41,9 @@ export function CompanyList({ companies }: CompanyListProps) {
                   />
                 )}
                 <div>
-                  <h2 className="company-name">{company.displayName}</h2>
+                  <h2 className="company-name" data-testid="company-name">
+                    {company.displayName}
+                  </h2>
                   <div className="company-ticker">
                     <span className="icon">🏢</span>
                     <span>{company.companyTicker}</span>
