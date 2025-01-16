@@ -1,12 +1,21 @@
 import { test, expect } from "@playwright/test";
 import { COMPANIES } from "@/app/lib/mock";
 import { listOfCompanies } from "@/app/lib/helpers";
+import { navigateTo, clickLink } from "./testHelpers";
 
+const firstCompany = COMPANIES[0];
+const lastCompany = COMPANIES[COMPANIES.length - 1];
+
+/**
+ * Testing - Homepage (app/page.tsx)
+ * Checks if we show the right number of companies and if everything looks good
+ *
+ */
 test.describe("Homepage", () => {
   test("should find the banner, display the correct company count in banner", async ({
     page,
   }) => {
-    await page.goto("/");
+    await navigateTo(page, "/");
 
     await expect(page.getByText("Companies listed")).toBeVisible();
 
@@ -17,23 +26,26 @@ test.describe("Homepage", () => {
     );
   });
 });
-
+/**
+ * Testing - Companies List page (app/companies/page.tsx)
+ * Makes sure users can browse companies and click through to see more details
+ *
+ */
 test.describe("Companies", () => {
   test("should navigate to companies page when clicking Browse Companies button", async ({
     page,
   }) => {
-    await page.goto("/");
+    await navigateTo(page, "/");
 
-    await page.getByText("Browse Companies").click();
+    await clickLink(page, "Browse Companies");
 
     await expect(page).toHaveURL("/companies");
+
     await expect(page).toHaveTitle("Companies - list");
   });
 
   test("should display first company name correctly", async ({ page }) => {
-    await page.goto("/companies");
-
-    const firstCompany = COMPANIES[0];
+    await navigateTo(page, "/companies");
 
     await expect(page.getByTestId("company-name").first()).toHaveText(
       firstCompany.displayName
@@ -41,9 +53,7 @@ test.describe("Companies", () => {
   });
 
   test("should display last company names correctly", async ({ page }) => {
-    await page.goto("/companies");
-
-    const lastCompany = COMPANIES[COMPANIES.length - 1];
+    await navigateTo(page, "/companies");
 
     await expect(page.getByTestId("company-name").last()).toHaveText(
       lastCompany.displayName
@@ -53,7 +63,7 @@ test.describe("Companies", () => {
   test("should not show back button on companies list page", async ({
     page,
   }) => {
-    await page.goto("/companies");
+    await navigateTo(page, "/companies");
 
     await expect(page.getByText("← Back to Companies")).not.toBeVisible();
   });
@@ -61,7 +71,7 @@ test.describe("Companies", () => {
   test("should navigate to company detail page when clicking Show Detail", async ({
     page,
   }) => {
-    await page.goto("/companies");
+    await navigateTo(page, "/companies");
 
     const detailButton = page
       .getByRole("button", { name: /show detail/i })
@@ -71,12 +81,14 @@ test.describe("Companies", () => {
     await expect(page).toHaveURL("/companies/1");
   });
 });
-
+/**
+ * Testing - Company Detail page (app/companies/[id]/page.tsx)
+ * Makes sure we show all company info correctly and handling missing company
+ *
+ */
 test.describe("Company Detail Page", () => {
   test("should show company name on company detail page", async ({ page }) => {
-    const firstCompany = COMPANIES[0];
-
-    await page.goto(`/companies/${firstCompany.companyId}`);
+    await navigateTo(page, `/companies/${firstCompany.companyId}`);
 
     await expect(page).toHaveTitle(
       `${firstCompany.companyName} | Company Profile`
@@ -90,9 +102,7 @@ test.describe("Company Detail Page", () => {
   });
 
   test("should show back button on company detail page", async ({ page }) => {
-    await page.goto("/companies/1");
-
-    await page.getByText("← Back to Companies").click();
+    await navigateTo(page, "/companies/1");
 
     await expect(page.getByText("← Back to Companies")).toBeVisible();
   });
@@ -102,7 +112,7 @@ test.describe("Company Detail Page", () => {
   }) => {
     const notExistedCompany = COMPANIES.length + 1;
 
-    await page.goto(`/companies/${notExistedCompany}`);
+    await navigateTo(page, `/companies/${notExistedCompany}`);
 
     await expect(page).toHaveTitle("Company Not Found");
 

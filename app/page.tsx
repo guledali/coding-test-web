@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import { getCompanies } from "@/app/lib/data";
+import { getCompanies } from "@/app/lib/actions";
 import { listOfCompanies } from "@/app/lib/helpers";
 import { Showcase } from "@/app/ui";
 
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const { data: companies } = await getCompanies();
+  console.log("companies: ", companies);
 
   const companiesListed = listOfCompanies(companies);
 

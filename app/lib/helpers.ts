@@ -20,3 +20,23 @@ export const isCompanyDetailRoute = (pathname: string | null): boolean => {
 
   return /^\/companies\/\d+$/.test(pathname);
 };
+/**
+ * Gets a company by ID from a list of companies
+ * Returns undefined if company doesn't exist
+ *
+ */
+export function getCompanyById(companies: Company[], companyId: number) {
+  return companies.find((company) => company.companyId === companyId);
+}
+/**
+ * Formats a date string to DD/MM/YYYY format
+ * can be used for consistent date display across the application
+ *
+ */
+export function formatDate(dateString: string): string {
+  const date = new Date(dateString);
+  const day = String(date.getUTCDate()).padStart(2, "0");
+  const month = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const year = date.getUTCFullYear();
+  return `${day}/${month}/${year}`;
+}

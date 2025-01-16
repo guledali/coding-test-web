@@ -4,7 +4,6 @@ import "./DetailCompany.css";
 
 interface DetailCompanyProps {
   company: Company;
-  // onBack: () => void;
 }
 
 export function DetailCompany({ company }: DetailCompanyProps) {
@@ -117,10 +116,6 @@ export function DetailCompany({ company }: DetailCompanyProps) {
           )}
         </div>
       </div>
-
-      {/* <button onClick={onBack} className="back-button">
-        ← Back to Companies
-      </button> */}
     </div>
   );
 }

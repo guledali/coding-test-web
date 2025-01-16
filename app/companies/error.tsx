@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, CSSProperties } from "react";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 // Define types for the styles
 interface StylesType {
   container: CSSProperties;
   heading: CSSProperties;
+  message: CSSProperties;
   button: CSSProperties;
   buttonHover: CSSProperties;
 }
@@ -18,9 +22,17 @@ const styles: StylesType = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
+    padding: "2rem",
   },
   heading: {
     textAlign: "center",
+    color: "#ef4444",
+    marginBottom: "1rem",
+  },
+  message: {
+    textAlign: "center",
+    color: "#6b7280",
+    marginBottom: "1.5rem",
   },
   button: {
     marginTop: "1rem",
@@ -38,7 +50,7 @@ const styles: StylesType = {
   },
 };
 
-export default function Error({
+export default function CompaniesError({
   error,
   reset,
 }: {
@@ -46,13 +58,16 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Optionally log the error to an error reporting service
-    console.error(error);
+    // Log the error to console in development
+    console.error("Companies Error:", error);
   }, [error]);
 
   return (
-    <main style={styles.container}>
-      <h2 style={styles.heading}>Something went wrong!</h2>
+    <main style={styles.container} className={inter.className}>
+      <h2 style={styles.heading}>Companies List Error</h2>
+      <p style={styles.message}>
+        There was a problem loading the list of companies. Please try again.
+      </p>
       <button
         style={styles.button}
         onMouseOver={(e) => {

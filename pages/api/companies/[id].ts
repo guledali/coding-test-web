@@ -1,13 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { COMPANIES as data } from "@/app/lib/mock";
+import { COMPANIES } from "@/app/lib/mock";
+import { getCompanyById } from "@/app/lib/helpers";
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<any>
 ) {
-  const { id } = req.query;
+  const id = Number(req.query.id);
 
-  const company = data.find((x) => x.companyId == Number(id));
+  const company = getCompanyById(COMPANIES, id);
 
   if (!company) {
     return res.status(404).json({ error: "Company not found" });

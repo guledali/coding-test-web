@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { Metadata } from "next/types";
 import { notFound } from "next/navigation";
-import { getCompany } from "@/app/lib/data";
+import { getCompany } from "@/app/lib/actions";
 import { DetailCompany } from "@/app/ui";
 
 type Props = {

@@ -1,5 +1,6 @@
+import { Suspense } from "react";
 import { Metadata } from "next";
-import { getCompanies } from "@/app/lib/data";
+import { getCompanies } from "@/app/lib/actions";
 import { CompanyList } from "@/app/ui";
 
 export const metadata: Metadata = {
@@ -9,10 +10,13 @@ export const metadata: Metadata = {
 
 export default async function Page() {
   const { data: companies } = await getCompanies();
+  console.log("companies: ", companies);
 
   return (
     <>
-      <CompanyList companies={companies} />
+      <Suspense fallback={<p>Loading companies...</p>}>
+        <CompanyList companies={companies} />
+      </Suspense>
     </>
   );
 }

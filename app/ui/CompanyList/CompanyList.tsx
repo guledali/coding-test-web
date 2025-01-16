@@ -3,6 +3,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
 import { Inter } from "next/font/google";
+import { formatDate } from "@/app/lib/helpers";
 import type { Company } from "@/app/lib/types";
 import "./CompanyList.css";
 
@@ -63,9 +64,9 @@ export function CompanyList({ companies }: CompanyListProps) {
                     <span className="icon">📅</span>
                     <span>
                       Latest event:{" "}
-                      {new Date(
-                        company.events[0].eventDate
-                      ).toLocaleDateString()}
+                      {company.events[0]?.eventDate
+                        ? formatDate(company.events[0].eventDate)
+                        : ""}
                     </span>
                   </div>
                 )}
@@ -96,8 +97,8 @@ export function CompanyList({ companies }: CompanyListProps) {
                         {event.eventTitle}
                       </a>
                       <div className="event-date">
-                        {new Date(event.eventDate).toLocaleDateString()} -{" "}
-                        {event.fiscalPeriod} {event.fiscalYear}
+                        {formatDate(event.eventDate)} - {event.fiscalPeriod}{" "}
+                        {event.fiscalYear}
                       </div>
                     </div>
                   ))}

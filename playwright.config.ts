@@ -1,6 +1,5 @@
 import { defineConfig, devices } from "@playwright/test";
-
-const baseUrl = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+import { BASE_URL } from "@/app/lib/constant";
 
 /**
  * Read environment variables from file.
@@ -35,14 +34,14 @@ export default defineConfig({
   // Run your local dev server before starting the tests
   webServer: {
     command: "npm run dev",
-    url: baseUrl,
+    url: BASE_URL,
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000, // 120 seconds
   },
 
   use: {
     // Base URL to use in actions like `await page.goto('/')`
-    baseURL: baseUrl,
+    baseURL: BASE_URL,
     trace: "on-first-retry",
     headless: process.env.CI ? true : false,
   },
