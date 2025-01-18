@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const { data: companies } = await getCompanies();
-  console.log("companies: ", companies);
+  const { companies } = await getCompanies();
 
   return (
     <>

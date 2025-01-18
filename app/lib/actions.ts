@@ -1,34 +1,20 @@
 "use server";
 
-import { CompaniesResponse, Company } from "@/app/lib/types";
-import { BASE_URL } from "@/app/lib/constant";
+import { Company } from "@/app/lib/types";
+import { fetchAllCompanies, fetchCompanyById } from "@/app/lib/data";
 
 /**
  * Fetches a list of companies from the API,
  * should throw an error if not
  *
  */
-export async function getCompanies(): Promise<CompaniesResponse> {
-  console.log(BASE_URL, "BASE_URL");
+export async function getCompanies(): Promise<{ companies: Company[] }> {
   try {
-    const response = await fetch(`${BASE_URL}/api/companies`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      next: { revalidate: 0 },
-    });
+    const response = await fetchAllCompanies();
+    const companies = await response.json();
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error("API Error Response:", errorText);
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    console.log("response: ", response);
-
-    return response.json();
+    return { companies };
   } catch (error) {
-    console.error("Full error details:", error);
     throw new Error(`Failed to fetch list companies: ${error}`);
   }
 }
@@ -37,16 +23,11 @@ export async function getCompanies(): Promise<CompaniesResponse> {
  * should throw an error if not
  *
  */
-export async function getCompany(id: string): Promise<{ company: Company }> {
-  try {
-    const response = await fetch(`${BASE_URL}/api/companies/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+export async function getCompany(
+  id: string
+): Promise<{ company: Company | null }> {
+  const response = await fetchCompanyById(id);
+  const company = await response.json();
 
-    return response.json();
-  } catch (error) {
-    throw new Error(`Failed to fetch company with ID ${id}: ${error}`);
-  }
+  return { company };
 }

@@ -30,7 +30,7 @@ export default function NotFound() {
       }}
     >
       <span style={styles.icon}>☹️</span>
-      <h2 style={styles.heading}>404 Not Found</h2>
+      <h2 style={styles.heading}>Not Found</h2>
       <p>Could not find the company.</p>
       <Link href="/companies" style={styles.link}>
         Go Back

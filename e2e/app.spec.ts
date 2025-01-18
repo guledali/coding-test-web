@@ -117,7 +117,7 @@ test.describe("Company Detail Page", () => {
     await expect(page).toHaveTitle("Company Not Found");
 
     await expect(
-      page.getByRole("heading", { name: "404 Not Found" })
+      page.getByRole("heading", { name: "Not Found" })
     ).toBeVisible();
 
     await expect(page.getByRole("link", { name: "Go Back" })).toBeVisible();
